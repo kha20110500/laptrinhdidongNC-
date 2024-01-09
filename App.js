@@ -1,20 +1,41 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { useState } from "react";
+import { View, Text, StyleSheet } from "react-native";
+import LoadingScreen from "./assets/component/LoadingScreen";
 
-export default function App() {
+const App = () => {
+  const [loadingComplete, setLoadingComplete] = useState(false);
+
+  const handleLoadingComplete = () => {
+    setLoadingComplete(true);
+  };
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <>
+      {!loadingComplete ? (
+        <LoadingScreen onLoadingComplete={handleLoadingComplete} />
+      ) : (
+        <View
+          style={{
+            flex: 1,
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <Text style={styles.text}>Trang chủ!</Text>
+        </View>
+      )}
+    </>
   );
-}
+};
 
 const styles = StyleSheet.create({
-  container: {
+  text: {
+    fontSize: 20,
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: "center",
+    marginTop: 100,
+    alignItems: "center",
   },
 });
+
+export default App;
