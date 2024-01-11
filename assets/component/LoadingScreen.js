@@ -1,17 +1,18 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { View, Text, ActivityIndicator, StyleSheet } from "react-native";
 
-const LoadingScreen = ({ onLoadingComplete }) => {
+const LoadingScreen = ({ navigation }) => {
   useEffect(() => {
-    const timer = setTimeout(() => {
-      onLoadingComplete();
-    }, 10000);
+    const fetchData = async () => {
+      await new Promise((resolve) => setTimeout(resolve, 10000));
+      navigation.replace("Home");
+    };
 
-    return () => clearTimeout(timer);
-  }, [onLoadingComplete]);
+    fetchData();
+  }, [navigation]);
 
   return (
-    <View style={styles.container}>
+    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
       <Text style={{ fontSize: 20, ...styles.row }}>
         Trần Thị Phương Linh 20110126
       </Text>
@@ -21,11 +22,9 @@ const LoadingScreen = ({ onLoadingComplete }) => {
       <Text style={{ fontSize: 20, ...styles.row }}>
         LẬP TRÌNH DI ĐỘNG NÂNG CAO
       </Text>
-      <ActivityIndicator size="large" color="#0000ff" />
     </View>
   );
 };
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -36,5 +35,4 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
 });
-
 export default LoadingScreen;

@@ -1,41 +1,24 @@
-import React, { useState } from "react";
-import { View, Text, StyleSheet } from "react-native";
+import React from "react";
+import { NavigationContainer } from "@react-navigation/native";
+import { createStackNavigator } from "@react-navigation/stack";
 import LoadingScreen from "./assets/component/LoadingScreen";
+import HomeScreen from "./assets/component/HomePage";
+
+const Stack = createStackNavigator();
 
 const App = () => {
-  const [loadingComplete, setLoadingComplete] = useState(false);
-
-  const handleLoadingComplete = () => {
-    setLoadingComplete(true);
-  };
-
   return (
-    <>
-      {!loadingComplete ? (
-        <LoadingScreen onLoadingComplete={handleLoadingComplete} />
-      ) : (
-        <View
-          style={{
-            flex: 1,
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          <Text style={styles.text}>Trang chủ!</Text>
-        </View>
-      )}
-    </>
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName="Loading">
+        <Stack.Screen
+          name="Loading"
+          component={LoadingScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen name="Home" component={HomeScreen} />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 };
-
-const styles = StyleSheet.create({
-  text: {
-    fontSize: 20,
-    flex: 1,
-    justifyContent: "center",
-    marginTop: 100,
-    alignItems: "center",
-  },
-});
 
 export default App;
